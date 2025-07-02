@@ -10,9 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_02_145130) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_02_194030) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "node_tree_paths", force: :cascade do |t|
+    t.integer "ancestor_id", null: false
+    t.integer "descendant_id", null: false
+    t.index ["ancestor_id", "descendant_id"], name: "index_node_tree_paths_on_ancestor_id_and_descendant_id", unique: true
+    t.index ["ancestor_id"], name: "index_node_tree_paths_on_ancestor_id"
+    t.index ["descendant_id"], name: "index_node_tree_paths_on_descendant_id"
+  end
 
   create_table "nodes", force: :cascade do |t|
     t.integer "parent_id"
