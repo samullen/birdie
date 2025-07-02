@@ -23,7 +23,5 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_02_194030) do
   end
 
   create_table "nodes", force: :cascade do |t|
-    t.integer "parent_id"
-    t.index ["parent_id"], name: "index_nodes_on_parent_id"
   end
 end
