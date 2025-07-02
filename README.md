@@ -1,24 +1,11 @@
-# README
+## Cleaning the data
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Making sure ID is unique
 
-Things you may want to cover:
+```
+$ cut -f 1 -d "," data/nodes.csv | sort -u | wc -l
+3146
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+$ wc -l data/nodes.csv
+3146
+```
