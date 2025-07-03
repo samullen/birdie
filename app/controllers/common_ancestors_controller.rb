@@ -3,8 +3,8 @@ class CommonAncestorsController < ApplicationController
     node1 = Node.find(params[:id])
     node2 = Node.find(params[:node_b_id])
 
-    root = root_ancestor(node1, node2).descendant
-    lca = lowest_common_ancestor(node1, node2).descendant
+    root = root_ancestor(node1, node2).ancestor
+    lca = lowest_common_ancestor(node1, node2).ancestor
 
     render json: {
       root: root.id,
