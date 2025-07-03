@@ -6,7 +6,10 @@ class Node < ApplicationRecord
   has_many :ancestors, class_name: 'Node', through: :descendant_paths, source: :descendant
 
   def common_ancestors(other_node)
-    # Find the common ancestors of this node and another node
     self.ancestor_paths.where(ancestor_id: other_node.ancestor_paths.pluck(:ancestor_id))
+  end
+
+  def depth
+    self.descendants.count
   end
 end
