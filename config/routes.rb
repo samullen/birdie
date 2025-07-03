@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
-  get "/nodes/:node_a_id/common_ancestors/:node_b_id" => "common_ancestors#index", as: :common_ancestors
+  get "/nodes/:id/common_ancestors/:node_b_id" => "common_ancestors#index", as: :common_ancestors
   # get "/birds"
 
   # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)

@@ -1,6 +1,6 @@
 class CommonAncestorsController < ApplicationController
   def index
-    node1 = Node.find(params[:node_a_id])
+    node1 = Node.find(params[:id])
     node2 = Node.find(params[:node_b_id])
 
     root = root_ancestor(node1, node2).descendant
@@ -15,6 +15,7 @@ class CommonAncestorsController < ApplicationController
 
   private
 
+  # Memoize the common ancestors to avoid repeated calculations
   def common_ancestors(node1, node2)
     @common_ancestors ||= node1.common_ancestors(node2)
   end
