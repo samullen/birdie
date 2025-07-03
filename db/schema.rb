@@ -10,9 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_02_194030) do
+ActiveRecord::Schema[8.0].define(version: 2025_07_03_181537) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "birds", force: :cascade do |t|
+    t.bigint "node_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["node_id"], name: "index_birds_on_node_id"
+  end
 
   create_table "node_tree_paths", force: :cascade do |t|
     t.integer "ancestor_id", null: false
@@ -24,4 +31,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_02_194030) do
 
   create_table "nodes", force: :cascade do |t|
   end
+
+  add_foreign_key "birds", "nodes"
 end

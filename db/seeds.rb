@@ -17,6 +17,9 @@ records.each do |row|
   # Create a Node record for each row in the CSV file
   Node.create(id: row[0])
 
+  # Create a Bird record for each row in the CSV file
+  Bird.create(node_id: row[0])
+
   # Create ancestor-child relationships in NodeTreePath for each row
   if row[1].blank?
     NodeTreePath.create(descendant_id: row[0], ancestor_id: row[0])
@@ -28,3 +31,5 @@ records.each do |row|
     end
   end
 end
+
+
