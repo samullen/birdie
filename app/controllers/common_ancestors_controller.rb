@@ -1,32 +1,42 @@
 class CommonAncestorsController < ApplicationController
   def index
-    node1 = Node.find(params[:id])
-    node2 = Node.find(params[:node_b_id])
+    # Two queries in case the same node_id is passed for both params
+    node1 = Node.where(id: params[:id]).limit(1).first
+    node2 = Node.where(id: params[:node_b_id]).limit(1).first
 
-    root = root_ancestor(node1, node2).ancestor
-    lca = lowest_common_ancestor(node1, node2).ancestor
+    case [node1, node2]
+    in Node => node1, Node => node2
+      common_ancestors = node1.common_ancestors(node2)
+      root = root_ancestor(common_ancestors)
+      lca = lowest_common_ancestor(common_ancestors)
 
-    render json: {
-      root: root.id,
-      lowest_common_ancestor: lca.id,
-      depth: lca.depth
-    }
+      response_handler(root, lca)
+    else
+      response_handler(nil, nil)
+    end
   end
 
   private
 
-  # Memoize the common ancestors to avoid repeated calculations
-  def common_ancestors(node1, node2)
-    @common_ancestors ||= node1.common_ancestors(node2)
+  def response_handler(root, lca)
+    if root.present? && lca.present?
+      render json: { root: root.id, lowest_common_ancestor: lca.id, depth: lca.depth }
+    else
+      render json: { root: nil, lowest_common_ancestor: nil, depth: nil }
+    end
   end
 
-  def root_ancestor(node1, node2)
-    common_ancestors(node1, node2).
-      min { |a, b| a.ancestor_id <=> b.ancestor_id }
+  # I normally would not put a method in a controller like this, but building
+  # out a new class or module seemed like overkill
+  def root_ancestor(paths)
+    if path = paths.min { |a, b| a.ancestor_id <=> b.ancestor_id }
+      path.ancestor
+    end
   end
 
-  def lowest_common_ancestor(node1, node2)
-    common_ancestors(node1, node2).
-      max { |a, b| a.ancestor_id <=> b.ancestor_id }
+  def lowest_common_ancestor(paths)
+    if path = paths.max { |a, b| a.ancestor_id <=> b.ancestor_id }
+      path.ancestor
+    end
   end
 end

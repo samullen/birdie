@@ -8,6 +8,7 @@ class Node < ApplicationRecord
   has_many :ancestors, class_name: 'Node', through: :ancestor_paths, source: :ancestor
 
   def common_ancestors(other_node)
+    # I let CoPilot write this
     self.ancestor_paths.where(ancestor_id: other_node.ancestor_paths.pluck(:ancestor_id))
   end
 
