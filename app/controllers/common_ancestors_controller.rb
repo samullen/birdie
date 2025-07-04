@@ -1,4 +1,6 @@
 class CommonAncestorsController < ApplicationController
+  # Most of #index could be extracted to a class, but doesn't need to since
+  # there is nothing else using this logic
   def index
     # Two queries in case the same node_id is passed for both params
     node1 = Node.where(id: params[:id]).limit(1).first
