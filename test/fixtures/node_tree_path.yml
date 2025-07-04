@@ -1,0 +1,27 @@
+root_root:
+  ancestor: root
+  descendant: root
+
+root_child:
+  ancestor: root
+  descendant: child
+
+child_child:
+  ancestor: child
+  descendant: child
+
+root_grandchild:
+  ancestor: root
+  descendant: grandchild
+
+child_grandchild:
+  ancestor: child
+  descendant: grandchild
+
+grandchild_grandchild:
+  ancestor: grandchild
+  descendant: grandchild
+
+orphan_orphan:
+  ancestor: orphan
+  descendant: orphan
